@@ -1,11 +1,13 @@
 def main():
     path = "books/frankenstein.txt"
     text = print_text(path)
-    print(text)
     book_len = word_count(text)
-    print(f"{book_len} words found in the document")
     chars = char_count(text)
-    print(chars)
+    summary = report(chars, book_len)
+    print(summary)
+    
+
+
 
 def print_text(path):
 	with open("books/frankenstein.txt") as f:
@@ -27,5 +29,23 @@ def char_count(text):
 		else:
 			 dictionary[letter] = 1
 	return dictionary
+
+def report(chars, book_len):
+	char_list = []
+	for key, value in chars.items():
+		if key.isalpha():
+			new_dic = {"char": key, "num": value}
+			char_list.append(new_dic)
+	char_list.sort(key=lambda x: x["num"], reverse=True)
+	print("---Begin report---")
+	print(f"{book_len} words found in document")
+	for entry in char_list:
+		char = entry["char"]
+		count = entry["num"]
+		print(f"The '{char}' character was found {count} times")
+	print("---End report---")
+
+
+
 
 main()
